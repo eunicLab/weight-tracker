@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/weight-tracker2/static/css/main.ee1f9bcd.chunk.css",
+    "main.js": "/weight-tracker2/static/js/main.c341ccf6.chunk.js",
+    "main.js.map": "/weight-tracker2/static/js/main.c341ccf6.chunk.js.map",
+    "runtime-main.js": "/weight-tracker2/static/js/runtime-main.76fb677c.js",
+    "runtime-main.js.map": "/weight-tracker2/static/js/runtime-main.76fb677c.js.map",
+    "static/js/2.442306d4.chunk.js": "/weight-tracker2/static/js/2.442306d4.chunk.js",
+    "static/js/2.442306d4.chunk.js.map": "/weight-tracker2/static/js/2.442306d4.chunk.js.map",
+    "index.html": "/weight-tracker2/index.html",
+    "precache-manifest.b00ac5a90693e4f29cd7bc884b6240ee.js": "/weight-tracker2/precache-manifest.b00ac5a90693e4f29cd7bc884b6240ee.js",
+    "service-worker.js": "/weight-tracker2/service-worker.js",
+    "static/css/main.ee1f9bcd.chunk.css.map": "/weight-tracker2/static/css/main.ee1f9bcd.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.76fb677c.js",
+    "static/js/2.442306d4.chunk.js",
+    "static/css/main.ee1f9bcd.chunk.css",
+    "static/js/main.c341ccf6.chunk.js"
+  ]
+}
