@@ -5,6 +5,8 @@
   "homepage": "https://euniclab.github.io/weight-tracker2",
   "dependencies": {
     "chart.js": "^2.9.3",
+    "gh": "^2.8.3",
+    "pages": "0.0.16",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-scripts": "3.2.0"
