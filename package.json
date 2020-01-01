@@ -6,6 +6,7 @@
   "dependencies": {
     "chart.js": "^2.9.3",
     "gh": "^2.8.3",
+    "gh-pages": "^2.1.1",
     "pages": "0.0.16",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

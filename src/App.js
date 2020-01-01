@@ -220,7 +220,7 @@ handleGoalButton(event){
       </form>
 
 
-      <button className = "btn" onClick={this.handleAddForm}>CURRENT WEIGHT: {global.currentWeight} kg</button>
+      <button className = "btn" onClick={this.handleAddForm}>CURRENT WEIGHT: {global.currentWeight} kg </button>
 
        <form className = {this.state.formStatus}>
           <h2>{global.currentWeight} kg</h2>
@@ -236,8 +236,6 @@ handleGoalButton(event){
                 />
             </div>
             <h6 className ={global.currentWeight !=="" && this.state.goalInput !==""?"":"noDisplay"}>{global.difference}{global.currentWeight !=="" && this.state.goalInput !==""? " kg difference remain to reach your goal": ""} </h6>
-        <button className= "btn"onClick={this.handleAddForm}>ADD NEW ENTRY</button>
-      <h6>Last Modified 15 Dec 2019</h6>
       </div>
         
       </header>
