@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import Chart from "chart.js";
 import classes from "./App.css";
+import axios from 'axios';
 
 
 
@@ -21,7 +22,8 @@ export default class LineGraph extends PureComponent {
     global.allDateInputs =[]
     global.counter =0
     global.currentWeight=""
-    global.difference=""
+   
+
 
     this.state ={
                   formStatus:"noDisplay",
@@ -29,7 +31,11 @@ export default class LineGraph extends PureComponent {
                   DateInput:"",
                   goalInput:"",
                   chartData:{},
-                  goalFormStatus:"noDisplay"
+                  goalFormStatus:"noDisplay",
+                  todos:"",
+                  currentWeight:"",
+
+
                 }
 
 
@@ -47,8 +53,56 @@ export default class LineGraph extends PureComponent {
 
 
 componentDidMount() {
-        this.buildChart();
-    }
+
+   axios.get('https://warm-inlet-95424.herokuapp.com/api/stuff',)
+
+
+.then(response=>{ 
+
+    if(response.data.length>0) {
+
+    response.data.sort(function(a, b){
+    var dateA=new Date(a.date), dateB=new Date(b.date)
+    return dateA-dateB //sort by date ascending
+})
+
+}
+
+
+
+this.setState({todos:response.data,})
+
+
+
+ let i=0
+for (i=0;i<this.state.todos.length;i++){
+    global.Lweight[i]=this.state.todos[i].weight
+    global.Ldate[i] = this.state.todos[i].date
+    global.allGoalInputs[i] = this.state.todos[this.state.todos.length-1].goal
+  }
+
+this.setState({
+
+  
+  goalInput:this.state.todos[this.state.todos.length-1].goal,
+ currentWeight:this.state.todos[this.state.todos.length-1].weight
+})
+
+
+
+
+   this.buildChart();
+
+    console.log(global.Lweight)
+    console.log(global.Ldate)
+  
+ })
+}
+
+
+
+     
+    
 
     componentDidUpdate() {
         this.buildChart();
@@ -128,31 +182,22 @@ componentDidMount() {
     if(this.state.weightInput!=="" && this.state.DateInput!==""){
     global.allWeightInputs=this.state.weightInput
     global.allDateInputs[global.counter]=this.state.DateInput
-    global.allInputs[global.counter]= {weight:this.state.weightInput, date:this.state.DateInput}
-    let i=0
-    for(i=0; i<=global.allInputs.length;i++){global.allGoalInputs[i]=this.state.goalInput}
-    console.log(global.allInputs)
+    global.allInputs[global.counter]= { id:"", goal:this.state.goalInput, weight:this.state.weightInput, date:this.state.DateInput,}
 
-    global.allInputs.sort(function(a, b){
-    var dateA=new Date(a.date), dateB=new Date(b.date)
-    return dateA-dateB //sort by date ascending
-})
-    console.log(global.allInputs)
-     
-    for (i=0;i<global.allInputs.length;i++){
-    global.Lweight[i]=global.allInputs[i].weight
-    global.Ldate[i] = global.allInputs[i].date
-    console.log(global.Lweight)
-    console.log(global.Ldate)
-  };
+         axios.post('https://warm-inlet-95424.herokuapp.com/api/stuff', global.allInputs[global.counter])
+       
+    .then(res=> {window.location = '/';}
+)
+   
+
+
+
 
     global.counter++
     this.setState({formStatus:"noDisplay"                             
   })
     global.currentWeight = global.Lweight[global.Lweight.length-1]
-    if(this.state.goalInput>global.currentWeight){
-    global.difference = this.state.goalInput - global.currentWeight
-  }else{global.difference = global.currentWeight-this.state.goalInput}
+    
 
   }
   else{alert("one or more fields required")}
@@ -187,12 +232,21 @@ handleGoal(event)
 handleGoalOk(event)
 {
     event.preventDefault();
+
+
+const upDatedList={
+    goal:this.state.goalInput,
+  }
+
+
+axios.put('https://warm-inlet-95424.herokuapp.com/api/stuff/'+this.state.todos[this.state.todos.length-1]._id, upDatedList)
+  .then(res=>{window.location = '/';
+});
+
+
     let i=0
     for(i=0; i<=global.allInputs.length;i++){global.allGoalInputs[i]=this.state.goalInput}
     this.setState({goalFormStatus:"noDisplay"})
-    if(this.state.goalInput>global.currentWeight){
-    global.difference = this.state.goalInput - global.currentWeight
-  }else{global.difference = global.currentWeight-this.state.goalInput}
 
 }
 
@@ -220,7 +274,7 @@ handleGoalButton(event){
       </form>
 
 
-      <button className = "btn" onClick={this.handleAddForm}>CURRENT WEIGHT: {global.currentWeight} kg </button>
+      <button className = "btn" onClick={this.handleAddForm}>CURRENT WEIGHT: {this.state.currentWeight} kg </button>
 
        <form className = {this.state.formStatus}>
           <h2>{global.currentWeight} kg</h2>
@@ -235,7 +289,7 @@ handleGoalButton(event){
                     ref={this.chartRef}
                 />
             </div>
-            <h6 className ={global.currentWeight !=="" && this.state.goalInput !==""?"":"noDisplay"}>{global.difference}{global.currentWeight !=="" && this.state.goalInput !==""? " kg difference remain to reach your goal": ""} </h6>
+            <h6 className ={this.state.currentWeight !=="" && this.state.goalInput !==""?"":"noDisplay"}>{Math.pow((Math.pow((this.state.currentWeight-this.state.goalInput),2)),0.5)}{this.state.currentWeight !=="" && this.state.goalInput !==""? " kg difference remain to reach your goal": ""} </h6>
       </div>
         
       </header>

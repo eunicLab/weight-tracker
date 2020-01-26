@@ -4,13 +4,15 @@
   "private": true,
   "homepage": "https://euniclab.github.io/weight-tracker2",
   "dependencies": {
+    "axios": "^0.19.1",
     "chart.js": "^2.9.3",
     "gh": "^2.8.3",
     "gh-pages": "^2.1.1",
     "pages": "0.0.16",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "react-scripts": "3.2.0"
+    "react-scripts": "^3.3.0",
+    "save": "^2.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
