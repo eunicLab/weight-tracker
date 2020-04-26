@@ -1,8 +1,8 @@
 import React from 'react';
-import edit from './edit_icon.png';
-import delete_icon from './delete_icon.png';
+import edit from '../images/edit_icon.png';
+import delete_icon from '../images/delete_icon.png';
 import axios from 'axios';
-import './App.css';
+import '../App.css';
 
 class WeightItem extends React.Component {
   constructor(props) {
@@ -12,64 +12,70 @@ class WeightItem extends React.Component {
       weightInput: '',
       dateInput: '',
       editBoxStatus: 'noDisplay',
-      updateCount: global.updateCount
+      updateCount: global.updateCount,
     };
   }
 
-  handleUpdate = event => {
+  handleUpdate = (event) => {
     event.preventDefault();
     const upDatedList = {
       weight: this.state.weightInput,
       date: this.state.dateInput,
-      goal: this.props.item.goal
+      goal: this.props.item.goal,
     };
 
     axios
       .put(
         'https://warm-inlet-95424.herokuapp.com/api/stuff/' +
           this.props.item._id,
-        upDatedList
+        upDatedList,
+        {
+          headers: { Authorization: `Bearer ${this.props.token}` },
+        }
       )
-      .then(res => {
+      .then((res) => {
         global.updateCount++;
         this.setState({ updateCount: global.updateCount });
         this.sendData();
       });
     this.setState({
-      editBoxStatus: 'noDisplay'
+      editBoxStatus: 'noDisplay',
     });
   };
 
-  handleDelete = event => {
+  handleDelete = (event) => {
     event.preventDefault();
     axios
       .delete(
         'https://warm-inlet-95424.herokuapp.com/api/stuff/' +
-          this.props.item._id
+          this.props.item._id,
+        {
+          headers: { Authorization: `Bearer ${this.props.token}` },
+        }
       )
-      .then(res => {
+      .then((res) => {
         global.updateCount++;
         this.setState({ updateCount: global.updateCount });
         this.sendData();
       });
   };
 
-  handleEdit = event => {
+  handleEdit = (event) => {
     event.preventDefault();
     this.setState({
       weightInput: this.props.item.weight,
       dateInput: this.props.item.date,
-      editBoxStatus: 'formStyle'
+      editBoxStatus: 'formStyle',
     });
   };
-  handleDateChange = event => {
+  handleDateChange = (event) => {
     this.setState({ dateInput: event.target.value });
   };
-  handleWeightChange = event => {
+  handleWeightChange = (event) => {
     this.setState({ weightInput: event.target.value });
   };
 
-  handleCancel = event => {
+  handleCancel = (event) => {
     event.preventDefault();
     this.setState({ editBoxStatus: 'noDisplay' });
   };
